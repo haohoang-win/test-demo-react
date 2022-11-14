@@ -1,13 +1,22 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from 'react-icons/fc'
+import { toast } from 'react-toastify';
 
-const ModalCreateUser = () => {
-    const [show, setShow] = useState(false);
+const ModalCreateUser = (props) => {
+    const { show, setShow } = props;
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+        setShow(false);
+        setEmail('');
+        setPassword('');
+        setUsername('');
+        setRole('USER');
+        setImage('');
+        setPreviewImage('');
+    };
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,11 +34,60 @@ const ModalCreateUser = () => {
         }
     }
 
+    const validateEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+
+    const handleSubmitCreateUser = async () => {
+        // validate
+        const isValidEmail = validateEmail(email)
+        if (!isValidEmail) {
+            toast.error('Invalid email!')
+            return;
+        }
+
+        if (!password) {
+            toast.error('Invalid password!')
+            return;
+        }
+
+        // call apis
+        let data = {
+            email: email,
+            password: password,
+            username: username,
+            role: role,
+            userImage: image
+        }
+
+        const form = new FormData();
+        form.append('email', email)
+        form.append('password', password)
+        form.append('username', username)
+        form.append('role', role)
+        form.append('userImage', image)
+
+        let res = await axios.post('http://localhost:8081/api/v1/participant', form);
+        console.log(res);
+        if (res.data && res.data.EC === 0) {
+            toast.success(res.data.EM);
+            handleClose();
+        }
+
+        if (res.data && res.data.EC !== 0) {
+            toast.error(res.data.EM)
+        }
+    }
+
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            {/* <Button variant="primary" onClick={handleShow}>
                 Launch demo modal
-            </Button>
+            </Button>  */}
 
             <Modal
                 show={show}
@@ -57,7 +115,7 @@ const ModalCreateUser = () => {
                         </div>
                         <div className="col-md-4">
                             <label className="form-label">Role</label>
-                            <select className="form-select" onChange={(event) => setRole(event.target.value)}>
+                            <select className="form-select" onChange={(event) => setRole(event.target.value)} value={role}>
                                 <option value="USER">USER</option>
                                 <option value='ADMIN'>ADMIN</option>
                             </select>
@@ -81,7 +139,7 @@ const ModalCreateUser = () => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
                         Save
                     </Button>
                 </Modal.Footer>
