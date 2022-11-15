@@ -54,7 +54,9 @@ const ModalUpdateUser = (props) => {
         let data = await putUpdateUser(dataUpdate.id, username, role, image)
         if (data && data.EC === 0) {
             toast.success(data.EM);
-            await props.fetchListUsers();
+            // await props.fetchListUsers();
+            // props.setCurrentPage(1)
+            await props.fetchListUsersWithPaginate(props.currentPage)
             handleClose();
         }
 
