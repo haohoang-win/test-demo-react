@@ -43,7 +43,6 @@ const DetailQuiz = (props) => {
             setDataQuiz(data)
         }
     }
-    console.log('dataQuiz: ', dataQuiz);
 
     const handlePrev = () => {
         if (index - 1 < 0) {
@@ -62,19 +61,56 @@ const DetailQuiz = (props) => {
         let dataQuizClone = _.cloneDeep(dataQuiz);
         let question = dataQuizClone.find(item => +item.questionsId === +questionId)
         if (question && question.answer) {
-            let b = question.answer.map(item => {
+            question.answer = question.answer.map(item => {
                 if (+item.id === +answerId) {
                     item.isSelected = !item.isSelected;
                 }
                 return item;
             })
-
-            question.answer = b;
         }
         let index = dataQuizClone.findIndex(item => +item.questionsId === +questionId);
         if (index > -1) {
             dataQuizClone[index] = question;
             setDataQuiz(dataQuizClone)
+        }
+    }
+
+    const handleFinishQuiz = () => {
+        // {
+        //     "quizId": 1,
+        //         "answers": [
+        //             {
+        //                 "questionId": 1,
+        //                 "userAnswerId": [3]
+        //             },
+        //             {
+        //                 "questionId": 2,
+        //                 "userAnswerId": [6]
+        //             }
+        //         ]
+        // }
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        };
+        let answers = [];
+        if (dataQuiz && dataQuiz.length > 0) {
+            dataQuiz.forEach(question => {
+                let questionId = question.questionsId;
+                let userAnswerId = []
+
+                question.answer.forEach(a => {
+                    if (a.isSelected) {
+                        userAnswerId.push(a.id)
+                    }
+                })
+                answers.push({
+                    questionId: +questionId,
+                    userAnswerId
+                })
+                payload.answers = answers;
+            })
+            console.log('payload:', payload);
         }
     }
 
@@ -98,7 +134,7 @@ const DetailQuiz = (props) => {
                 <div className="footer">
                     <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
                     <button className="btn btn-primary ml-3" onClick={() => handleNext()}>Next</button>
-                    <button className="btn btn-warning ml-3" onClick={() => handleNext()}>Finish</button>
+                    <button className="btn btn-warning ml-3" onClick={() => handleFinishQuiz()}>Finish</button>
                 </div>
             </div>
             <div className="right-content">
