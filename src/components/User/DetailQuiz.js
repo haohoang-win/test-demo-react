@@ -33,6 +33,7 @@ const DetailQuiz = (props) => {
                             questionDescription = item.description;
                             image = item.image;
                         }
+                        item.answers.isSelected = false;
                         answer.push(item.answers)
                     })
                     return { questionsId: key, answer, questionDescription, image }
@@ -42,6 +43,7 @@ const DetailQuiz = (props) => {
             setDataQuiz(data)
         }
     }
+    console.log('dataQuiz: ', dataQuiz);
 
     const handlePrev = () => {
         if (index - 1 < 0) {
@@ -53,6 +55,26 @@ const DetailQuiz = (props) => {
     const handleNext = () => {
         if (dataQuiz && dataQuiz.length > index + 1) {
             setIndex(index + 1)
+        }
+    }
+
+    const handleCheckbox = (answerId, questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz);
+        let question = dataQuizClone.find(item => +item.questionsId === +questionId)
+        if (question && question.answer) {
+            let b = question.answer.map(item => {
+                if (+item.id === +answerId) {
+                    item.isSelected = !item.isSelected;
+                }
+                return item;
+            })
+
+            question.answer = b;
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionsId === +questionId);
+        if (index > -1) {
+            dataQuizClone[index] = question;
+            setDataQuiz(dataQuizClone)
         }
     }
 
@@ -68,6 +90,7 @@ const DetailQuiz = (props) => {
                 </div>
                 <div className="q-content">
                     <Question
+                        handleCheckbox={handleCheckbox}
                         index={index}
                         data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
                     />
@@ -75,6 +98,7 @@ const DetailQuiz = (props) => {
                 <div className="footer">
                     <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
                     <button className="btn btn-primary ml-3" onClick={() => handleNext()}>Next</button>
+                    <button className="btn btn-warning ml-3" onClick={() => handleNext()}>Finish</button>
                 </div>
             </div>
             <div className="right-content">
