@@ -13,9 +13,10 @@ import sidebarBg from '../../assets/bg2.jpg';
 import { DiReact } from 'react-icons/di';
 import { MdDashboard } from 'react-icons/md'
 import './SideBar.scss'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const SideBar = (props) => {
+    const navigate = useNavigate();
     const { image, collapsed, rtl, toggled, handleToggleSidebar } = props
 
     return (
@@ -41,7 +42,9 @@ const SideBar = (props) => {
                         }}
                     >
                         <DiReact size={'3em'} color={'00bfff'} />
-                        <span>HAO HOANG</span>
+                        <span onClick={() => navigate('/')}>
+                            HAO HOANG
+                        </span>
                     </div>
                 </SidebarHeader>
 
@@ -63,7 +66,10 @@ const SideBar = (props) => {
                                 Quản lý User
                                 <Link to='/admins/manage-users' />
                             </MenuItem>
-                            <MenuItem>Quản lý Bài Quiz</MenuItem>
+                            <MenuItem>
+                                Quản lý Bài Quiz
+                                <Link to='/admins/manage-quizzes' />
+                            </MenuItem>
                             <MenuItem>Quản lý Câu Hỏi</MenuItem>
                         </SubMenu>
                     </Menu>
