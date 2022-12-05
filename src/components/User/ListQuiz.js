@@ -15,7 +15,7 @@ const ListQuiz = (props) => {
         if (res && res.EC === 0) {
             setArrQuiz(res.DT)
         }
-        console.log(arrQuiz);
+        // console.log(arrQuiz);
     }
 
     return (
