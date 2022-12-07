@@ -157,6 +157,7 @@ const DetailQuiz = (props) => {
             </div>
             <div className="right-content">
                 <RightContent
+                    handleFinishQuiz={handleFinishQuiz}
                     dataQuiz={dataQuiz}
                 />
             </div>
