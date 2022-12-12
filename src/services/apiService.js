@@ -46,7 +46,7 @@ const getQuizByUser = () => {
 }
 
 const getDataQuiz = (id) => {
-    return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`)
+    return axios.get(`api/v1/questions-by-quiz?quizId=${id}`)
 }
 
 const postSubmitQuiz = (data) => {
@@ -64,7 +64,7 @@ const postCreateNewQuiz = (description, name, difficulty, image) => {
 }
 
 const getAllQuizForAdmin = () => {
-    return axios.get(`/api/v1/quiz/all`)
+    return axios.get(`api/v1/quiz/all`)
 }
 
 const putEditQuiz = (id, name, description, type, image) => {
@@ -79,7 +79,7 @@ const putEditQuiz = (id, name, description, type, image) => {
 }
 
 const deleteQuiz = (userId) => {
-    return axios.delete(`/api/v1/quiz/${userId}`)
+    return axios.delete(`api/v1/quiz/${userId}`)
 }
 
 const postCreateNewQuestionForQuiz = (quiz_id, description, image) => {
@@ -117,6 +117,10 @@ const logout = (email, refresh_token) => {
     });
 }
 
+const getOverview = () => {
+    return axios.get(`api/v1/overview`);
+}
+
 export {
     postCreateNewUser, getAllUsers, putUpdateUser,
     deleteUser, getUserWithPaginate, postLogin,
@@ -124,5 +128,5 @@ export {
     postSubmitQuiz, postCreateNewQuiz, getAllQuizForAdmin,
     putEditQuiz, deleteQuiz, postCreateNewQuestionForQuiz,
     postCreateNewAnswerForQuestion, postAssignQuiz, getQuizWithQA,
-    postUpsertQA, logout
+    postUpsertQA, logout, getOverview
 }
