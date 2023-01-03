@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 
 const HomePage = (props) => {
+    const { t } = useTranslation();
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)
     const navigate = useNavigate();
-    const { t } = useTranslation();
 
     return (
         <div className="homepage-container">
@@ -25,7 +25,7 @@ const HomePage = (props) => {
                 </div>
                 <div className='title-3'>
                     {isAuthenticated === true ?
-                        <button onClick={() => navigate('/users')}>Doing Quiz Now</button>
+                        <button onClick={() => navigate('/users')}>{t('homepage.title3.doing')}</button>
                         :
                         <button onClick={() => navigate('/')}>{t('homepage.title3.login')}</button>
                     }

@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { postRegister } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import Language from '../Header/Language';
+import { useTranslation, Trans } from 'react-i18next';
 
 const Register = () => {
+    const { t } = useTranslation();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUsername] = useState('')
@@ -47,19 +49,19 @@ const Register = () => {
     return (
         <div className="register-container">
             <div className='header'>
-                <span> Already have an account?</span>
-                <button onClick={() => { navigate('/login') }}>Login</button>
+                <span>{t('register.haveaccount')}</span>
+                <button onClick={() => { navigate('/login') }}>{t('register.login')}</button>
                 <Language />
             </div>
             <div className='title col-4 mx-auto'>
-                HoiDanIT
+                HaoHoang
             </div>
             <div className='welcome col-4 mx-auto'>
-                Start your journey?
+                {t('register.start')}
             </div>
             <div className='content-form col-4 mx-auto'>
                 <div className='form-group'>
-                    <label>Email (*)</label>
+                    <label>{t('register.email')} (*)</label>
                     <input
                         type={'email'}
                         className='form-control'
@@ -68,7 +70,7 @@ const Register = () => {
                     />
                 </div>
                 <div className='form-group'>
-                    <label>Password (*)</label>
+                    <label>{t('register.password')} (*)</label>
                     <input
                         type={'password'}
                         className='form-control'
@@ -77,7 +79,7 @@ const Register = () => {
                     />
                 </div>
                 <div className='form-group'>
-                    <label>Username</label>
+                    <label>{t('register.username')}</label>
                     <input
                         type={'text'}
                         className='form-control'
@@ -90,12 +92,12 @@ const Register = () => {
                         className='btn-submit'
                         onClick={() => handleRegister()}
                     >
-                        Create my free account
+                        {t('register.create')}
                     </button>
                 </div>
                 <div className='text-center'>
                     <span className='back' onClick={() => { navigate('/') }}>
-                        &#60;&#60; Go to Homepage
+                        &#60;&#60; {t('register.homepage')}
                     </span>
                 </div>
             </div>

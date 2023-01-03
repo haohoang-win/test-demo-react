@@ -3,7 +3,59 @@
         "title1": "Có rất nhiều cái để hỏi...",
         "title2": "Không biết thì google",
         "title3": {
-            "login": "Get's started. It's free"
+            "doing": "Làm bài Quiz ngay",
+            "login": "Bắt đầu miễn phí."
         }
+    },
+    "listquiz": {
+        "start": "Bắt đầu ngay",
+        "noquiz": "Bạn chưa có bài Quiz lúc này..."
+    },
+    "detailquiz": {
+        "home": "Trang chủ",
+        "user": "Người dùng",
+        "quiz": "Làm bài Quiz",
+        "prev": "Trước",
+        "next": "Sau",
+        "finish": "Hoàn thành"
+    },
+    "modalresult": {
+        "result": "Kết quả của bạn...",
+        "question": "Tổng số câu hỏi: ",
+        "correct-answer": "Tổng số câu trả lời đúng: ",
+        "show": "Hiện kết quả",
+        "close": "Đóng"
+    },
+    "question": {
+        "questions": "Câu hỏi"
+    },
+    "header": {
+        "home": "Trang chủ",
+        "user": "Người dùng",
+        "admin": "Quản trị",
+        "login": "Đăng nhập",
+        "signup": "Đăng ký",
+        "profile": "Thông tin người dùng",
+        "logout": "Đăng xuất"
+    },
+    "login": {
+        "haveaccount": "Bạn chưa có tài khoản?",
+        "signup": "Đăng ký",
+        "hello": "Xin chào, bạn là ai?",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "forgotpass": "Quên mật khẩu?",
+        "login": "Đăng nhập",
+        "homepage": "Trở về trang chủ"
+    },
+    "register": {
+        "haveaccount": "Đã có tài khoản?",
+        "login": "Đăng nhập",
+        "start": "Bắt đầu cuộc hành trình của bạn?",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "username": "Tên của bạn",
+        "create": "Tạo tài khoản miễn phí",
+        "homepage": "Trở về trang chủ"
     }
 }

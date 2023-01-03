@@ -19,6 +19,11 @@ instance.interceptors.request.use(function (config) {
     // Do something before request is sent
     return config;
 }, function (error) {
+    // Token expired: EC === -999
+    if (error.response.data && error.response.data.EC === -999) {
+        window.location.href = '/login'
+    }
+
     // Do something with request error
     return Promise.reject(error);
 });

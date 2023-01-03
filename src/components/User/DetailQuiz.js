@@ -6,8 +6,11 @@ import './DetailQuiz.scss'
 import Question from "./Question";
 import ModalResult from "./ModalResult";
 import RightContent from "./Content/RightContent";
+import { Breadcrumb, NavLink } from "react-bootstrap";
+import { useTranslation, Trans } from 'react-i18next';
 
 const DetailQuiz = (props) => {
+    const { t } = useTranslation();
     const params = useParams();
     const location = useLocation();
     const quizId = params.id;
@@ -135,41 +138,54 @@ const DetailQuiz = (props) => {
     }
 
     return (
-        <div className="detail-quiz-container">
-            <div className="left-content">
-                <div className="title">
-                    Quiz {quizId}: {location?.state?.quizTitle}
+        <>
+            <Breadcrumb className="quiz-detail-new-header">
+                <NavLink to='/' className="breadcrumb-item">
+                    {t('detailquiz.home')}
+                </NavLink>
+                <NavLink to='/users' className="breadcrumb-item">
+                    {t('detailquiz.user')}
+                </NavLink>
+                <Breadcrumb.Item active>
+                    {t('detailquiz.quiz')}
+                </Breadcrumb.Item>
+            </Breadcrumb>
+            <div className="detail-quiz-container">
+                <div className="left-content">
+                    <div className="title">
+                        Quiz {quizId}: {location?.state?.quizTitle}
+                    </div>
+                    <hr />
+                    <div className="q-body">
+                        <img />
+                    </div>
+                    <div className="q-content">
+                        <Question
+                            handleCheckbox={handleCheckbox}
+                            index={index}
+                            data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+                        />
+                    </div>
+                    <div className="footer">
+                        <button className="btn btn-secondary" onClick={() => handlePrev()}>{t('detailquiz.prev')}</button>
+                        <button className="btn btn-primary ml-3" onClick={() => handleNext()}>{t('detailquiz.next')}</button>
+                        <button className="btn btn-warning ml-3" onClick={() => handleFinishQuiz()}>{t('detailquiz.finish')}</button>
+                    </div>
                 </div>
-                <hr />
-                <div className="q-body">
-                    <img />
-                </div>
-                <div className="q-content">
-                    <Question
-                        handleCheckbox={handleCheckbox}
-                        index={index}
-                        data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+                <div className="right-content">
+                    <RightContent
+                        handleFinishQuiz={handleFinishQuiz}
+                        dataQuiz={dataQuiz}
+                        setIndex={setIndex}
                     />
                 </div>
-                <div className="footer">
-                    <button className="btn btn-secondary" onClick={() => handlePrev()}>Prev</button>
-                    <button className="btn btn-primary ml-3" onClick={() => handleNext()}>Next</button>
-                    <button className="btn btn-warning ml-3" onClick={() => handleFinishQuiz()}>Finish</button>
-                </div>
-            </div>
-            <div className="right-content">
-                <RightContent
-                    handleFinishQuiz={handleFinishQuiz}
-                    dataQuiz={dataQuiz}
-                    setIndex={setIndex}
+                <ModalResult
+                    show={isShowModalResult}
+                    setShow={setIsShowModalResult}
+                    dataModalResult={dataModalResult}
                 />
             </div>
-            <ModalResult
-                show={isShowModalResult}
-                setShow={setIsShowModalResult}
-                dataModalResult={dataModalResult}
-            />
-        </div>
+        </>
     )
 }
 
